@@ -1,1 +1,2 @@
-# learning-scala
+learning-scala
+================
