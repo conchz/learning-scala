@@ -1,8 +1,16 @@
+import com.typesafe.sbt.SbtScalariform
+import com.typesafe.sbt.SbtScalariform.ScalariformKeys
+
+import scalariform.formatter.preferences._
+
+val commonsLang3 = "org.apache.commons" % "commons-lang3" % "3.4"
+val logbackClassic = "ch.qos.logback" % "logback-classic" % "1.1.7"
+val toolsStack = Seq(commonsLang3, logbackClassic)
 
 val scalatest = "org.scalatest" %% "scalatest" % "2.2.6" % "test"
 val unitTestingStack = Seq(scalatest)
 
-val commonDependencies = unitTestingStack
+val commonDependencies = unitTestingStack ++ toolsStack
 
 lazy val commonSettings = Seq(
   organization := "com.github.lavenderx",
@@ -53,6 +61,14 @@ lazy val root = (project in file("."))
   .aggregate(core)
 
 lazy val core: Project = (project in file("core"))
+  .enablePlugins(SbtScalariform)
+  .settings(SbtScalariform.defaultScalariformSettings ++ Seq(
+    ScalariformKeys.preferences := ScalariformKeys.preferences.value
+      .setPreference(FormatXml, false)
+      .setPreference(AlignSingleLineCaseStatements, true)
+      .setPreference(DoubleIndentClassDeclaration, true)
+      .setPreference(DanglingCloseParenthesis, Force)
+  ))
   .settings(commonSettings)
   .settings(
     unmanagedSourceDirectories in Compile <<= baseDirectory { base =>
