@@ -1,11 +1,8 @@
 package com.github.lavenderx
 
-import org.apache.commons.lang3.builder.ToStringBuilder
-import org.apache.commons.lang3.builder.ToStringStyle.SHORT_PREFIX_STYLE
-
 /**
-  * Created by lavenderx on 2016-05-08.
-  */
+ * Created by lavenderx on 2016-05-08.
+ */
 object SimpleSingleton {
   def main(args: Array[String]) {
     println(MarkerFactory getMarker "blue")
@@ -19,7 +16,7 @@ object SimpleSingleton {
 class Marker(val color: String) {
   println("Creating " + this)
 
-  override def toString: String = ToStringBuilder.reflectionToString(this, SHORT_PREFIX_STYLE)
+  override def toString: String = "marker color" + color
 }
 
 object MarkerFactory {

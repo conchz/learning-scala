@@ -1,11 +1,8 @@
 package com.github.lavenderx
 
-import org.apache.commons.lang3.builder.ToStringBuilder
-import org.apache.commons.lang3.builder.ToStringStyle.SHORT_PREFIX_STYLE
-
 /**
-  * Created by lavenderx on 2016-05-07.
-  */
+ * Created by lavenderx on 2016-05-07.
+ */
 class Person(val firstName: String, val lastName: String) {
   private var position: String = _
 
@@ -16,7 +13,7 @@ class Person(val firstName: String, val lastName: String) {
     position = positionHeld
   }
 
-  override def toString: String = ToStringBuilder.reflectionToString(this, SHORT_PREFIX_STYLE)
+  override def toString: String = firstName + "" + lastName + " holds " + position + " position"
 }
 
 object Person {

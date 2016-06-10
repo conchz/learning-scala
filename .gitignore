@@ -1,7 +1,10 @@
+### Java template
 *.class
 *.log
 
-# SBT specific
+### Scala template
+
+# sbt specific
 .cache
 .history
 .lib/
@@ -16,7 +19,7 @@ project/plugins/project/
 .scala_dependencies
 .worksheet
 
-# IntelliJ IDEA
+### IntelliJ IDEA
 *.iml
 .idea/
 .idea_modules/

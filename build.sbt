@@ -3,9 +3,9 @@ import com.typesafe.sbt.SbtScalariform.ScalariformKeys
 
 import scalariform.formatter.preferences._
 
-val commonsLang3 = "org.apache.commons" % "commons-lang3" % "3.4"
+val betterFiles = "com.github.pathikrit" %% "better-files" % "2.16.0"
 val logbackClassic = "ch.qos.logback" % "logback-classic" % "1.1.7"
-val toolsStack = Seq(commonsLang3, logbackClassic)
+val toolsStack = Seq(betterFiles, logbackClassic)
 
 val scalatest = "org.scalatest" %% "scalatest" % "2.2.6" % "test"
 val unitTestingStack = Seq(scalatest)
@@ -52,6 +52,11 @@ lazy val commonSettings = Seq(
   ivyScala := ivyScala.value map {
     _.copy(overrideScalaVersion = true)
   },
+
+  resolvers := Seq(
+    Resolver.mavenLocal,
+    "repox" at "http://repox.gtan.com:8078/"
+  ),
 
   libraryDependencies ++= commonDependencies
 )
