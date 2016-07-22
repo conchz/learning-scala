@@ -60,7 +60,8 @@ lazy val commonSettings = Seq(
     "repox" at "http://repox.gtan.com:8078/"
   ),
 
-  libraryDependencies ++= commonDependencies,
+  libraryDependencies ++= commonDependencies
+    ++ Seq("net.codingwell" %% "scala-guice" % "4.0.1"),
 
   unmanagedSourceDirectories in Compile := Seq((scalaSource in Compile).value),
   unmanagedSourceDirectories in Test := Seq((scalaSource in Test).value)
