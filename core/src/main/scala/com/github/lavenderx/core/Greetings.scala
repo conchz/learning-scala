@@ -1,12 +1,14 @@
-package com.github.lavenderx
+package com.github.lavenderx.core
 
 /**
  * Created by lavenderx on 2016-05-07.
  */
-object GreetingsForEach {
+object Greetings {
 
   def main(args: Array[String]) {
-    (1 until 6).foreach(i => print(i + ","))
+    for (i <- 1 to 3) {
+      print(i + ",")
+    }
 
     println("Scala Rocks!!!")
   }

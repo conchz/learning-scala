@@ -3,14 +3,24 @@ import com.typesafe.sbt.SbtScalariform.ScalariformKeys
 
 import scalariform.formatter.preferences._
 
-val betterFiles = "com.github.pathikrit" %% "better-files" % "2.16.0"
-val logbackClassic = "ch.qos.logback" % "logback-classic" % "1.1.7"
-val toolsStack = Seq(betterFiles, logbackClassic)
+val toolsStack = Seq(
+  "com.github.pathikrit" %% "better-files" % "2.16.0",
+  "ch.qos.logback" % "logback-classic" % "1.1.7",
+  "net.codingwell" %% "scala-guice" % "4.0.1"
+)
 
-val scalatest = "org.scalatest" %% "scalatest" % "2.2.6" % Test
-val unitTestingStack = Seq(scalatest)
+val unitTestingStack = Seq(
+  "org.scalatest" %% "scalatest" % "2.2.6" % Test
+)
 
 val commonDependencies = unitTestingStack ++ toolsStack
+
+val akkaVersion = "2.4.9-RC1"
+val akkaDependencies = Seq(
+  "com.typesafe.akka" %% "akka-actor" % akkaVersion,
+  "com.typesafe.akka" %% "akka-slf4j" % akkaVersion,
+  "com.typesafe.akka" %% "akka-stream" % akkaVersion
+)
 
 organization in ThisBuild := "com.github.lavenderx"
 scalaVersion in ThisBuild := "2.11.8"
@@ -60,24 +70,25 @@ lazy val commonSettings = Seq(
     "repox" at "http://repox.gtan.com:8078/"
   ),
 
-  libraryDependencies ++= commonDependencies
-    ++ Seq("net.codingwell" %% "scala-guice" % "4.0.1"),
+  libraryDependencies ++= commonDependencies ++ akkaDependencies,
 
   unmanagedSourceDirectories in Compile := Seq((scalaSource in Compile).value),
   unmanagedSourceDirectories in Test := Seq((scalaSource in Test).value)
 )
 
-lazy val root = (project in file("."))
-  .settings(commonSettings: _*)
-  .aggregate(core)
+lazy val scalariformSettings = SbtScalariform.defaultScalariformSettings ++ Seq(
+  ScalariformKeys.preferences := ScalariformKeys.preferences.value
+    .setPreference(FormatXml, false)
+    .setPreference(AlignSingleLineCaseStatements, true)
+    .setPreference(DoubleIndentClassDeclaration, true)
+    .setPreference(DanglingCloseParenthesis, Force)
+)
 
-lazy val core: Project = (project in file("core"))
+lazy val root = (project in file("."))
   .enablePlugins(SbtScalariform)
-  .settings(SbtScalariform.defaultScalariformSettings ++ Seq(
-    ScalariformKeys.preferences := ScalariformKeys.preferences.value
-      .setPreference(FormatXml, false)
-      .setPreference(AlignSingleLineCaseStatements, true)
-      .setPreference(DoubleIndentClassDeclaration, true)
-      .setPreference(DanglingCloseParenthesis, Force)
-  ))
-  .settings(commonSettings)
+  .settings(commonSettings: _*)
+  .settings(scalariformSettings: _*)
+  .aggregate(core, akka)
+
+lazy val core: Project = project in file("core")
+lazy val akka: Project = project in file("akka")

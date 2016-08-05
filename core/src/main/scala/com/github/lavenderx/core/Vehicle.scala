@@ -1,4 +1,4 @@
-package com.github.lavenderx
+package com.github.lavenderx.core
 
 /**
  * 这个例子是关于Scala的类继承

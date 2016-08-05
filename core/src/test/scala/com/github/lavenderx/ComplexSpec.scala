@@ -1,5 +1,6 @@
 package com.github.lavenderx
 
+import com.github.lavenderx.core.Complex
 import org.scalatest.{ FlatSpec, Matchers }
 
 /**
