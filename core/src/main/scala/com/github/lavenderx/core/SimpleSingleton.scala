@@ -1,8 +1,5 @@
 package com.github.lavenderx.core
 
-/**
- * Created by lavenderx on 2016-05-08.
- */
 object SimpleSingleton {
   def main(args: Array[String]) {
     println(MarkerFactory getMarker "blue")

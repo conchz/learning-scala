@@ -1,8 +1,5 @@
 package com.github.lavenderx.core
 
-/**
- * Created by lavenderx on 2016-05-07.
- */
 class Complex(val real: Int, val imaginary: Int) {
 
   def +(operand: Complex): Complex = {

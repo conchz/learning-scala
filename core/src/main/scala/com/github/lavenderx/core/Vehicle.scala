@@ -2,7 +2,6 @@ package com.github.lavenderx.core
 
 /**
  * 这个例子是关于Scala的类继承
- * Created by lavenderx on 2016-05-07.
  */
 class Vehicle(val id: Int, val year: Int) {
   override def toString: String = "ID: " + id + ", Year: " + year

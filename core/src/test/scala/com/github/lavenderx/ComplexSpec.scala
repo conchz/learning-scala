@@ -3,9 +3,6 @@ package com.github.lavenderx
 import com.github.lavenderx.core.Complex
 import org.scalatest.{ FlatSpec, Matchers }
 
-/**
- * Created by lavenderx on 2016-05-07.
- */
 class ComplexSpec extends FlatSpec with Matchers {
 
   "(1+2i) + (2-3i)" should "3-1i" in {
