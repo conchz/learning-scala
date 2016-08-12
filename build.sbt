@@ -1,7 +1,5 @@
-import com.typesafe.sbt.SbtScalariform
-import com.typesafe.sbt.SbtScalariform.ScalariformKeys
-
-import scalariform.formatter.preferences._
+organization in ThisBuild := "com.github.lavenderx"
+scalaVersion in ThisBuild := "2.11.8"
 
 val toolsStack = Seq(
   "com.github.pathikrit" %% "better-files" % "2.16.0",
@@ -15,15 +13,12 @@ val unitTestingStack = Seq(
 
 val commonDependencies = unitTestingStack ++ toolsStack
 
-val akkaVersion = "2.4.9-RC1"
+val akkaVersion = "2.4.9-RC2"
 val akkaDependencies = Seq(
   "com.typesafe.akka" %% "akka-actor" % akkaVersion,
   "com.typesafe.akka" %% "akka-slf4j" % akkaVersion,
   "com.typesafe.akka" %% "akka-stream" % akkaVersion
 )
-
-organization in ThisBuild := "com.github.lavenderx"
-scalaVersion in ThisBuild := "2.11.8"
 
 lazy val commonSettings = Seq(
   name := "learning-scala",
@@ -42,9 +37,7 @@ lazy val commonSettings = Seq(
     "scm:git:git@github.com:lavenderx/learning-scala.git")
   ),
 
-  licenses := Seq(
-    ("MIT", url("https://opensource.org/licenses/MIT"))
-  ),
+  licenses := Seq(("MIT", url("https://opensource.org/licenses/MIT"))),
 
   fork in run := true,
 
@@ -66,9 +59,7 @@ lazy val commonSettings = Seq(
     _.copy(overrideScalaVersion = true)
   },
 
-  resolvers ++= Seq(
-    "repox" at "http://repox.gtan.com:8078/"
-  ),
+  resolvers ++= Seq("repox" at "http://repox.gtan.com:8078/"),
 
   libraryDependencies ++= commonDependencies ++ akkaDependencies,
 
@@ -76,19 +67,12 @@ lazy val commonSettings = Seq(
   unmanagedSourceDirectories in Test := Seq((scalaSource in Test).value)
 )
 
-lazy val scalariformSettings = SbtScalariform.defaultScalariformSettings ++ Seq(
-  ScalariformKeys.preferences := ScalariformKeys.preferences.value
-    .setPreference(FormatXml, false)
-    .setPreference(AlignSingleLineCaseStatements, true)
-    .setPreference(DoubleIndentClassDeclaration, true)
-    .setPreference(DanglingCloseParenthesis, Force)
-)
-
-lazy val root = (project in file("."))
-  .enablePlugins(SbtScalariform)
+lazy val root = Project(id = "root", base = file("."))
   .settings(commonSettings: _*)
-  .settings(scalariformSettings: _*)
   .aggregate(core, akka)
 
-lazy val core: Project = project in file("core")
-lazy val akka: Project = project in file("akka")
+lazy val core = Project(id = "core", base = file("core"))
+  .settings(commonSettings)
+
+lazy val akka = Project(id = "akka", base = file("akka"))
+  .settings(commonSettings)
